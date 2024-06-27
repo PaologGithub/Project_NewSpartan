@@ -1,0 +1,169 @@
+﻿<UserControl
+    x:Class="Project_NewSpartan.UI.AboutControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid x:Name="AboutControlGrid">
+        <TextBlock Text="About" FontSize="24" FontWeight="Bold" Margin="20,10,0,45" />
+        <StackPanel Orientation="Vertical" Margin="0,60,0,0" HorizontalAlignment="Center" MinWidth="300">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;" FontSize="40" VerticalAlignment="Top"/>
+            <TextBlock Text="Project NewSpartan" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+            <TextBlock Text="This is a beta version, not final version" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0"><Hyperlink Click="Hyperlink_Click" FontSize="17">The project</Hyperlink></TextBlock>
+            <TreeView MaxHeight="400" Margin="0,5,0,0">
+                <TreeView.ItemTemplate>
+                    <DataTemplate x:DataType="TreeViewNode">
+                        <TextBlock Text="{x:Bind Content}"/>
+                    </DataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.RootNodes>
+                    <TreeViewNode Content="ToDo">
+                        <TreeViewNode.Children>
+                            <TreeViewNode Content="Functionnalities">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Include tab system"></TreeViewNode>
+                                    <TreeViewNode Content="Search in URL Input"></TreeViewNode>
+                                    <TreeViewNode Content="Remake UI to make it like Spartan"></TreeViewNode>
+                                    <TreeViewNode Content="Remake SetupPage UI"></TreeViewNode>
+                                    <TreeViewNode Content="Add WebSites paint"></TreeViewNode>
+                                    <TreeViewNode Content="Add WebSites reading mode"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="FavoriteControl">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Add FavoritePane TreeView Click"></TreeViewNode>
+                                    <TreeViewNode Content="Add Icons"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="SettingsControl">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Add Languages support"></TreeViewNode>
+                                    <TreeViewNode Content="Add Dark/Light theme"></TreeViewNode>
+                                    <TreeViewNode Content="Make an home page choice"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="Stability">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Make my own web engine" />
+                                    <!--Yeah I love to hurt myself :,)-->
+                                    <TreeViewNode Content="Delete my trash code"></TreeViewNode>
+                                    <TreeViewNode Content="Make class modern CharmsPane"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="Development">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Make devTools" />
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+
+                        </TreeViewNode.Children>
+                    </TreeViewNode>
+                </TreeView.RootNodes>
+            </TreeView>
+            <TreeView MaxHeight="400">
+                <TreeView.ItemTemplate>
+                    <DataTemplate x:DataType="TreeViewNode">
+                        <TextBlock Text="{x:Bind Content}"/>
+                    </DataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.RootNodes>
+                    <TreeViewNode Content="Files utility (.xaml and .xaml.cs)">
+                        <TreeViewNode.Children>
+                            <TreeViewNode Content="/App">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Launch the app"></TreeViewNode>
+                                    <TreeViewNode Content="Handle URIs"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="/MainPage">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="Is the MainPage"></TreeViewNode>
+                                    <TreeViewNode Content="Launch TitleBar"></TreeViewNode>
+                                    <TreeViewNode Content="Launch NavigationRailFrame"></TreeViewNode>
+                                    <TreeViewNode Content="Launch WebView"></TreeViewNode>
+                                    <TreeViewNode Content="Check if setup is needed"></TreeViewNode>
+                                    <TreeViewNode Content="Run setup if is needed"></TreeViewNode>
+                                    <TreeViewNode Content="Handle URIs URL"></TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+                            <TreeViewNode Content="/UI">
+                                <TreeViewNode.Children>
+                                    <TreeViewNode Content="/BoolToColorConverter">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Convert LogItem isImportant"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/FavoriteControl">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Check for all favorites"></TreeViewNode>
+                                            <TreeViewNode Content="Put favorites in a TreeView"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/LogItem">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Class for basic TreeView"></TreeViewNode>
+                                            <TreeViewNode Content="in SetupPage;FavoriteControl"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/NavigationRailFrame">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Create GoBack button"></TreeViewNode>
+                                            <TreeViewNode Content="Create GoForward button"></TreeViewNode>
+                                            <TreeViewNode Content="Create Reload button"></TreeViewNode>
+                                            <TreeViewNode Content="Create URL Input"></TreeViewNode>
+                                            <TreeViewNode Content="Create Reading button"></TreeViewNode>
+                                            <TreeViewNode Content="Create Favorite button"></TreeViewNode>
+                                            <TreeViewNode Content="Create Editing button"></TreeViewNode>
+                                            <TreeViewNode Content="Create Downloads button"></TreeViewNode>
+                                            <TreeViewNode Content="Create Settings button"></TreeViewNode>
+                                            <TreeViewNode Content="Change color with app theme"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/AboutControl">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Display product name"></TreeViewNode>
+                                            <TreeViewNode Content="Display a beta warning"></TreeViewNode>
+                                            <TreeViewNode Content="Display a link to project"></TreeViewNode>
+                                            <TreeViewNode Content="Display what to do next for app"></TreeViewNode>
+                                            <TreeViewNode Content="Display File utilities"></TreeViewNode>
+                                            <TreeViewNode Content="Display this easter egg"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/SettingsControl">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Display About button"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/SetupPage">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Create default Favorites"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/TitleBar">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Display a blank Titlebar"></TreeViewNode>
+                                            <TreeViewNode Content="Change color with app theme"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                    <TreeViewNode Content="/WebView">
+                                        <TreeViewNode.Children>
+                                            <TreeViewNode Content="Display MSEdge WebView"></TreeViewNode>
+                                            <TreeViewNode Content="Redirect MSEdge WebView control"></TreeViewNode>
+                                        </TreeViewNode.Children>
+                                    </TreeViewNode>
+                                </TreeViewNode.Children>
+                            </TreeViewNode>
+
+                        </TreeViewNode.Children>
+                    </TreeViewNode>
+                </TreeView.RootNodes>
+            </TreeView>
+        </StackPanel>
+    </Grid>
+</UserControl>

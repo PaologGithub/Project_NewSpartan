@@ -152,6 +152,7 @@ csx/
 
 # Microsoft Store app package directory
 AppPackages/
+BundleArtifacts/
 
 # Others
 *.[Cc]ache

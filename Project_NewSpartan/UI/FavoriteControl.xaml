@@ -1,0 +1,28 @@
+﻿<UserControl
+    x:Class="Project_NewSpartan.UI.FavoriteControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <local:BoolToColorConverter x:Key="BoolToColorConverter"></local:BoolToColorConverter>
+    </UserControl.Resources>
+
+    <Grid x:Name="FavoriteControlGrid">
+        <TextBlock Text="Favorites" FontSize="24" FontWeight="Bold" Margin="20,10,0,45"/>
+        <TreeView x:Name="FavoriteTreeView" CanDragItems="False" CanDrag="False" Margin="0,45,0,0">
+            <TreeView.ItemTemplate>
+                <DataTemplate x:DataType="local:LogItem">
+                    <TreeViewItem ItemsSource="{x:Bind Children}">
+                        <TextBlock Text="{x:Bind Message}" Foreground="{Binding IsImportant, Converter={StaticResource BoolToColorConverter}}" ToolTipService.ToolTip="{x:Bind Description}"/>
+                    </TreeViewItem>
+                </DataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </Grid>
+</UserControl>

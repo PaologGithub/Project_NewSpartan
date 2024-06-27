@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="Project_NewSpartan.UI.WebView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Webview is loading" Margin="0,0,0,10" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30"/>
+            <ProgressRing IsActive="True" Width="75" Height="75" Margin="0,0,0,10"/>
+            <TextBlock Text="Please do not press the reload button or navigate to another page until the webview has finished loading." TextWrapping="Wrap" FontWeight="Bold" Foreground="Red" HorizontalAlignment="Center" />
+            <TextBlock Text="If you're stuck on this screen, please make sure you have MSEdgeWebview2 installed, and restart NewSpartan" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0" />
+            <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0">MSEdgeWebview2: https://developer.microsoft.com/microsoft-edge/webview2/</TextBlock>
+        </StackPanel>
+        <controls:WebView2 x:Name="WebView2" Source="https://www.google.com"/>
+    </Grid>
+</Page>

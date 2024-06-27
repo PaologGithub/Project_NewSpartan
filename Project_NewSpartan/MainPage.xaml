@@ -1,0 +1,49 @@
+﻿<!--
+    
+    Hi!!! If you are reading this, this means you are watching my trash code...
+    Know that my job isn't about programming, and I'm just learning it.
+    Project NewSpartan is a little UWP project that I did to learn C#, XAML and WinUI/UWP
+    Please don't post my trashcode on https://www.reddit.com/r/programminghorror
+    Or if you want, post it with Project NewSpartan.
+    But, don't worry, I will update NewSpartan code to be more flexible, stable.
+    
+    If you don't understand what a file do, go to NewSpartan settings and check
+    `Files utility`
+    
+    Thanks for using this Project
+    
+-->
+    
+<Page
+    x:Class="Project_NewSpartan.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!-- Define rows for the layout -->
+        <Grid.RowDefinitions>
+            <!-- First row for the AppTitleBar -->
+            <RowDefinition Height="Auto"/>
+            <!-- Second row for the NavigationFrame -->
+            <RowDefinition Height="Auto"/>
+            <!-- Second row for the Frame content -->
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <!-- AppTitleBar placed in the first row -->
+        <Frame x:Name="TitlebarFrame" Grid.Row="0"/>
+        
+        <!-- NavigationRailFrame placed in the second row -->
+        <Frame x:Name="NavigationFrame" Grid.Row="1"/>
+
+        <!-- Main content placed in the third row -->
+        <Frame x:Name="MainFrame" Grid.Row="2" HorizontalAlignment="Stretch"/>
+    </Grid>
+</Page>

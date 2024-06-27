@@ -1,0 +1,10 @@
+﻿<Application
+    x:Class="Project_NewSpartan.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan">
+    <Application.Resources>
+        <!-- Add this ResourceDictionary -->
+        
+    </Application.Resources>
+</Application>
