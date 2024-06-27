@@ -9,7 +9,7 @@
   <Identity
     Name="3b32003e-9502-4825-8ecb-a5823aabe484"
     Publisher="CN=Paolog"
-    Version="0.0.0.0" />
+    Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="3b32003e-9502-4825-8ecb-a5823aabe484" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
