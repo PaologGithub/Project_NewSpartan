@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="Project_NewSpartan.UI.NewFavoriteControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project_NewSpartan.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Page.Resources>
+        <local:ImageUriConverter x:Key="ImageUriConverter"/>
+
+        <!-- DataTemplate for individual tiles -->
+        <DataTemplate x:Key="TileTemplate">
+            <Border Padding="10" Margin="5" Width="100" Height="100" ToolTipService.ToolTip="{Binding Description}">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Image to display the icon from the URL -->
+                    <Image Source="{Binding Icon, Converter={StaticResource ImageUriConverter}}" 
+                   Width="50" Height="50" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                    <!-- Text for the tile name -->
+                    <TextBlock Text="{Binding Name}" 
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                       TextTrimming="CharacterEllipsis" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+
+        <!-- CollectionViewSource to group the items -->
+        <CollectionViewSource x:Key="GroupedItemsSource"
+                              Source="{x:Bind GroupedItems}"
+                              IsSourceGrouped="True"
+                              ItemsPath="Items" />
+    </Page.Resources>
+
+    <Grid x:Name="NewFavoriteGrid">
+        <TextBlock Text="Favorites" FontSize="24" FontWeight="Bold" Margin="20,10,0,45"/>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 10, 0">
+            <Button x:Name="AddFavorite" Click="AddFavorite_Click">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74E;" FontSize="15"/>
+            </Button>
+        </Grid>
+
+        <!-- GridView for grouped items -->
+        <GridView ItemsSource="{Binding Source={StaticResource GroupedItemsSource}}"
+                  IsItemClickEnabled="True"
+                  ItemTemplate="{StaticResource TileTemplate}"
+                  ItemClick="GridView_ItemClick"
+                  SelectionMode="None"
+                  Margin="10, 30, 0, 45">
+
+            <!-- GroupStyle for displaying group headers -->
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key}" FontSize="18" FontWeight="Bold" Margin="10,10,0,10" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+
+                    <!-- Display tiles horizontally under each group header -->
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
+    </Grid>
+</Page>

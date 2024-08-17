@@ -17,13 +17,26 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Project_NewSpartan.UI
 {
-    public sealed partial class AboutControl : UserControl
+    public sealed partial class AboutControl : Page
     {
+        private WebView _webView;
+        
         public AboutControl()
         {
             this.InitializeComponent();
             CompositionTarget.Rendering += Update;
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is WebView webView)
+            {
+                _webView = webView;
+            }
+        }
+
         private void Update(object sender, object e)
         {
             if (App.Current.RequestedTheme == ApplicationTheme.Dark)
@@ -37,7 +50,7 @@ namespace Project_NewSpartan.UI
         }
         private void Hyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
-            ((Window.Current.Content as Frame).Content as MainPage).HandleProtocolActivation("https://www.github.com/PaologGithub/Project_NewSpartan");
+            _webView?.goTo("https://www.github.com/PaologGithub/Project_NewSpartan");
         }
     }
 }

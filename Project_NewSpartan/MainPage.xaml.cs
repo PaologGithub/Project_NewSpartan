@@ -37,12 +37,23 @@ namespace Project_NewSpartan
         {
             this.InitializeComponent();
 
-            MainFrame.Navigate(typeof(UI.WebView));
+            //MainFrame.Navigate(typeof(UI.WebView));
             TitlebarFrame.Navigate(typeof(UI.TitleBar));
             /// Put the WebView Frame as Parameter of NavigationRailFrame
-            NavigationFrame.Navigate(typeof(UI.NavigationRailFrame), MainFrame.Content as UI.WebView);
+            //NavigationFrame.Navigate(typeof(UI.NavigationRailFrame), MainFrame.Content as UI.WebView);
 
             this.Loaded += CheckForSetupFile;
+            CompositionTarget.Rendering += Update;
+        }
+
+        private void Update(object sender, object e)
+        {
+            ApplicationView appView = ApplicationView.GetForCurrentView();
+
+            if (Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.F11) == Windows.UI.Core.CoreVirtualKeyStates.Down)
+            {
+                setFullScreen(appView.IsFullScreenMode);
+            }
         }
 
         private async void CheckForSetupFile(object sender, RoutedEventArgs e)
@@ -95,8 +106,15 @@ namespace Project_NewSpartan
             if (uri.StartsWith("newspartan:")) { uri = uri.Substring("newspartan:".Length); };
             // Replace with your logic to handle the URI
             // Example: Navigating a WebView to the URL
-            (MainFrame.Content as UI.WebView).goTo(uri);
+            //(MainFrame.Content as UI.WebView).goTo(uri);
         }
 
+        public void setFullScreen(bool value)
+        {
+            ApplicationView appView = ApplicationView.GetForCurrentView();
+
+            //if (value) { appView.ExitFullScreenMode(); TitlebarFrame.Visibility = Visibility.Visible; NavigationFrame.Visibility = Visibility.Visible; }
+            //else { appView.TryEnterFullScreenMode(); TitlebarFrame.Visibility = Visibility.Collapsed; NavigationFrame.Visibility = Visibility.Collapsed; }
+        }
     }
 }

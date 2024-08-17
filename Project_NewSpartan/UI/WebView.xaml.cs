@@ -2,6 +2,7 @@
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -35,6 +36,12 @@ namespace Project_NewSpartan.UI
         private void WebView2_NavigationComplete(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             SourceChanged?.Invoke(this, sender.Source);
+
+            if (!args.IsSuccess)
+            {
+                string message = $"Navigation wasn't successfull. Check the url. Status Code: {args.HttpStatusCode}";
+                goTo($"https://paologgithub.github.io/products/NewSpartan/pages/error.html?NEWSPARTAN_URL={sender.Source.AbsoluteUri}&NEWSPARTAN_ERRCODE={args.WebErrorStatus}&NEWSPARTAN_ERRMSG={message}");
+            }
         }
 
 
@@ -43,9 +50,13 @@ namespace Project_NewSpartan.UI
             return WebView2.Source.ToString();
         }
 
+        public string getCurrentTitle()
+        {
+            return WebView2.CoreWebView2?.DocumentTitle;
+        }
+
         public void GoBack()
         {
-
             WebView2.GoBack();
         }
         public void GoForward()
@@ -58,7 +69,14 @@ namespace Project_NewSpartan.UI
         }
         public void goTo(string url)
         {
-            WebView2.Source = new Uri(url);
+            try
+            {
+                Uri uri = new Uri(url);
+                WebView2.Source = uri;
+            } catch (Exception ex)
+            {
+                goTo($"https://paologgithub.github.io/products/NewSpartan/pages/error.html?NEWSPARTAN_URL={url}&NEWSPARTAN_ERRCODE={ex.GetType()}&NEWSPARTAN_ERRMSG={ex.Message}");
+            }
         }
 
         public void showDownloads()
@@ -72,12 +90,6 @@ namespace Project_NewSpartan.UI
         public bool canGoForward()
         {
             return (WebView2.CanGoForward);
-        }
-
-
-        private async void Hyperlink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://developer.microsoft.com/microsoft-edge/webview2/"));
         }
 
     }

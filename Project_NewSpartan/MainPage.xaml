@@ -29,11 +29,11 @@
         <!-- Define rows for the layout -->
         <Grid.RowDefinitions>
             <!-- First row for the AppTitleBar -->
-            <RowDefinition Height="Auto"/>
-            <!-- Second row for the NavigationFrame -->
-            <RowDefinition Height="Auto"/>
-            <!-- Second row for the Frame content -->
             <RowDefinition Height="*"/>
+            <!-- Second row for the NavigationFrame -->
+            <!--<RowDefinition Height="Auto"/>-->
+            <!-- Second row for the Frame content -->
+            <!--<RowDefinition Height="*"/>-->
 
         </Grid.RowDefinitions>
 
@@ -41,9 +41,9 @@
         <Frame x:Name="TitlebarFrame" Grid.Row="0"/>
         
         <!-- NavigationRailFrame placed in the second row -->
-        <Frame x:Name="NavigationFrame" Grid.Row="1"/>
+        <!--<Frame x:Name="NavigationFrame" Grid.Row="1"/>-->
 
         <!-- Main content placed in the third row -->
-        <Frame x:Name="MainFrame" Grid.Row="2" HorizontalAlignment="Stretch"/>
+        <!--<Frame x:Name="MainFrame" Grid.Row="2" HorizontalAlignment="Stretch"/>-->
     </Grid>
 </Page>

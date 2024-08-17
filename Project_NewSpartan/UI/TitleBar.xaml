@@ -3,12 +3,73 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Project_NewSpartan.UI"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid x:Name="AppTitleBar" Background="Black" Height="32">
+    
+    <Grid x:Name="AppTitleBar" Background="Black">
+        <Grid.RowDefinitions>
+            <!-- For the Drag Region -->
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <!-- For the Drag Region -->
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         
+        <Grid x:Name="DragRegion" Grid.Row="1" Grid.Column="1" Background="Transparent"></Grid>
+        <!-- Why I'm not using Microsoft Controls? -->
+        <!-- Because Microsoft decided to put the TabView inside an WinUI Controls, and to make it works, I need to put it inside the app resources. -->
+        <!-- So, NewSpartan will look like WinUI and not UWP... THANKS MIKEROSOFT!! -->
+        
+        <!--<controls:TabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:TabViewItem Header="Document 0">
+                <controls:TabViewItem.IconSource>
+                    <controls:SymbolIconSource Symbol="Document" />
+                </controls:TabViewItem.IconSource>
+            </controls:TabViewItem>
+            <controls:TabView.TabStripHeader>
+                <Grid x:Name="ShellTitlebarInset" Background="Transparent" />
+            </controls:TabView.TabStripHeader>
+            <controls:TabView.TabStripFooter>
+                <Grid x:Name="CustomDragRegion" Background="Transparent" />
+            </controls:TabView.TabStripFooter>
+        </controls:TabView>-->
+        
+        <controls:TabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          TabWidthBehavior="Actual"
+                          CanCloseTabs="True"
+                          IsCloseButtonOverlay="True"
+                          CanDragItems="True"
+                          CanReorderItems="True"
+                          AllowDrop="True"
+                          x:Name="Tabs">
+            <controls:TabView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>Hi</TextBlock>
+                </DataTemplate>
+            </controls:TabView.ItemTemplate>
+
+            
+            <controls:TabView.TabActionHeader>
+                <Button x:Name="AddTabButtonUpper"
+                Height="32"
+                Width="32"
+                Margin="-1,0,0,0"
+                BorderThickness="1"
+                Background="Transparent"
+                Click="AddTabButtonUpper_Click"
+                Style="{StaticResource ButtonRevealStyle}">
+                    <Viewbox MaxWidth="16"
+                    MaxHeight="16">
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                      Glyph="&#xE710;" />
+                    </Viewbox>
+                </Button>
+
+            </controls:TabView.TabActionHeader>
+        </controls:TabView>
     </Grid>
 </Page>

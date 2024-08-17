@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,14 +25,37 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Project_NewSpartan.UI
 {
-    public sealed partial class SettingsControl : UserControl
+    public sealed partial class SettingsControl : Page
     {
+        private WebView _webView;
+        private TabViewItem _tab;
+        private NavigationParametersArgs _parametersArgs;
         public SettingsControl()
         {
             this.InitializeComponent();
             CompositionTarget.Rendering += Update;
 
+            
+
         }
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            string userName = await getUserName();
+            HelloText.Text = $"Hello, {userName}";
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is NavigationParametersArgs navigationParametersArgs)
+            {
+                _webView = navigationParametersArgs.webView;
+                _tab = navigationParametersArgs.tabViewItem;
+                Debug.WriteLine(_tab.Header);
+            }
+        }
+
         private void Update(object sender, object e)
         {
             if (App.Current.RequestedTheme == ApplicationTheme.Dark)
@@ -47,7 +75,7 @@ namespace Project_NewSpartan.UI
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            Grid mainGrid = (((Window.Current.Content as Frame).Content as Page).Content as Grid);
+            Grid mainGrid = (_tab.Content as Grid);
 
             // Metro SettingsPane like Grid
             Grid favoriteGrid = new Grid();
@@ -56,11 +84,53 @@ namespace Project_NewSpartan.UI
             favoriteGrid.Background = new SolidColorBrush(Colors.Gray);
             favoriteGrid.MinWidth = 300;
 
-            Frame favoriteFrame = new Frame { Content = new AboutControl(), Width = 300 };
+            Frame favoriteFrame = new Frame { Width = 300 };
+            favoriteFrame.Navigate(typeof(AboutControl), _webView);
 
             favoriteGrid.Children.Add(favoriteFrame);
 
             mainGrid.Children.Add(favoriteGrid);
+        }
+
+        private async Task<String> getUserName() {
+            IReadOnlyList<User> users = await User.FindAllAsync();
+
+            var current = users.Where(p => p.AuthenticationStatus == UserAuthenticationStatus.LocallyAuthenticated &&
+                                        p.Type == UserType.LocalUser).FirstOrDefault();
+
+
+            // user may have username
+            var data = await current.GetPropertyAsync(KnownUserProperties.AccountName);
+            string displayName = (string)data;
+
+            // or may be authinticated using hotmail 
+            if (String.IsNullOrEmpty(displayName) || displayName == " ")
+            {
+
+                string a = (string)await current.GetPropertyAsync(KnownUserProperties.FirstName);
+                string b = (string)await current.GetPropertyAsync(KnownUserProperties.LastName);
+                displayName = string.Format("{0} {1}", a, b);
+            }
+
+
+            // User may not has let us have their infos
+            if (String.IsNullOrEmpty(displayName) || displayName == " ") { displayName = WindowsIdentity.GetCurrent().Name.Split("\\")[1]; }
+
+            // Last try
+            if (String.IsNullOrEmpty(displayName) || displayName == " ") { displayName = "Unknown User"; }
+
+            return displayName;
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem)
+            {
+                string selectedText = menuFlyoutItem.Text;
+                string userName = await getUserName();
+
+                HelloText.Text = $"{selectedText}, {userName}";
+            }
         }
 
         // Yeah there is a function for theme changing, but it bugs and work like sh*t

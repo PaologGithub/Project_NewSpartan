@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using Project_NewSpartan.UI.NewSpartanHTML;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -31,6 +33,9 @@ namespace Project_NewSpartan.UI
     public sealed partial class NavigationRailFrame : Page
     {
         private WebView _webView;
+        private TabViewItem _tab;
+        private NavigationParametersArgs _parametersArgs;
+
         public NavigationRailFrame()
         {
             this.InitializeComponent();
@@ -84,10 +89,12 @@ namespace Project_NewSpartan.UI
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is WebView webView)
+            if (e.Parameter is NavigationParametersArgs navigationParametersArgs)
             {
-                _webView = webView;
+                _parametersArgs = navigationParametersArgs;
+                _webView = navigationParametersArgs.webView;
                 _webView.SourceChanged += webView_SourceChanged;
+                _tab = navigationParametersArgs.tabViewItem;
             }
         }
 
@@ -111,10 +118,19 @@ namespace Project_NewSpartan.UI
             if (e.Key == VirtualKey.Enter)
             {
                 e.Handled = true; // Prevents the default behavior (like beeping)
-                // Execute your submit logic here
+
                 string url = URLInput.Text;
-                // For example, navigate the WebView to the new 
-                _webView.goTo(url);
+                // Check if URI is valid uri
+                if (Uri.TryCreate(url, UriKind.Absolute, out Uri result))
+                {
+                    _webView.goTo(url);
+                } else if (Uri.TryCreate($"http://{url}", UriKind.Absolute, out Uri result1))
+                {
+                    _webView.goTo($"http://{url}");
+                } else
+                {
+                    _webView.goTo($"https://www.google.com/search?q={url}");
+                }
             }
         }
 
@@ -143,12 +159,12 @@ namespace Project_NewSpartan.UI
 
         private void FavoriteButton_Click(object sender, RoutedEventArgs e)
         {
-            Grid mainGrid = (((Window.Current.Content as Frame).Content as Page).Content as Grid);
+            Grid mainGrid = (_tab.Content as Grid);
 
             //If there is more items than three in MainPage (so there is a Pane Open), close it
-            if (mainGrid.Children.Count > 3)
+            if (mainGrid.Children.Count > 2)
             {
-                for (int i = mainGrid.Children.Count - 1; i >= 3; i--)
+                for (int i = mainGrid.Children.Count - 1; i >= 2; i--)
                 {
                     mainGrid.Children.RemoveAt(i);
                 }
@@ -156,12 +172,13 @@ namespace Project_NewSpartan.UI
             {
                 // Metro SettingsPane like Grid
                 Grid favoriteGrid = new Grid();
-                Grid.SetRow(favoriteGrid, 2);
+                Grid.SetRow(favoriteGrid, 1);
                 favoriteGrid.HorizontalAlignment = HorizontalAlignment.Right;
                 favoriteGrid.Background = new SolidColorBrush(Colors.Gray);
                 favoriteGrid.MinWidth = 300;
 
-                Frame favoriteFrame = new Frame { Content = new FavoriteControl(), Width = 300 };
+                Frame favoriteFrame = new Frame { Width = 300 };
+                favoriteFrame.Navigate(typeof(NewFavoriteControl), _webView);
 
                 favoriteGrid.Children.Add(favoriteFrame);
 
@@ -172,13 +189,13 @@ namespace Project_NewSpartan.UI
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Grid mainGrid = (((Window.Current.Content as Frame).Content as Page).Content as Grid);
+            Grid mainGrid = (_tab.Content as Grid);
 
-            if (mainGrid.Children.Count > 3)
+            if (mainGrid.Children.Count > 2)
             {
-                while(mainGrid.Children.Count > 3)
+                while(mainGrid.Children.Count > 2)
                 {
-                    mainGrid.Children.RemoveAt(3);
+                    mainGrid.Children.RemoveAt(2);
                 }
             } else
             {
@@ -189,7 +206,8 @@ namespace Project_NewSpartan.UI
                 settingsGrid.Background = new SolidColorBrush(Colors.Gray);
                 settingsGrid.MinWidth = 300;
 
-                Frame settingsFrame = new Frame { Content = new SettingsControl(), Width = 300 };
+                Frame settingsFrame = new Frame { Width = 300 };
+                settingsFrame.Navigate(typeof(SettingsControl), _parametersArgs);
 
                 settingsGrid.Children.Add(settingsFrame);
 

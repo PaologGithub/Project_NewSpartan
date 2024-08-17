@@ -58,6 +58,8 @@ namespace Project_NewSpartan.UI
                     {
                         string content = await Windows.Storage.FileIO.ReadTextAsync(file);
                         IniData data = parser.Parse(content);
+                        LogItem logItem = new LogItem(data["Favorite"]["Name"], false, data["Favorite"]["Description"]);
+                        logItem.ButtonClicked += (object sender, RoutedEventArgs e) => { Debug.WriteLine("Hi");  ((Window.Current.Content as Frame).Content as MainPage).HandleProtocolActivation(data["Favorite"]["URL"]); };
                         folderLogItem.Children.Add(new LogItem(data["Favorite"]["Name"], false, data["Favorite"]["Description"]));
                     }
                 }
@@ -85,6 +87,11 @@ namespace Project_NewSpartan.UI
             {
                 FavoriteControlGrid.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

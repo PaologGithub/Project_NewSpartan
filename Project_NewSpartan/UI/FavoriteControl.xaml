@@ -14,12 +14,14 @@
     </UserControl.Resources>
 
     <Grid x:Name="FavoriteControlGrid">
+        
         <TextBlock Text="Favorites" FontSize="24" FontWeight="Bold" Margin="20,10,0,45"/>
-        <TreeView x:Name="FavoriteTreeView" CanDragItems="False" CanDrag="False" Margin="0,45,0,0">
+        <TreeView x:Name="FavoriteTreeView" CanDragItems="False" CanDrag="False" Margin="0,45,0,0" SelectionMode="None">
             <TreeView.ItemTemplate>
                 <DataTemplate x:DataType="local:LogItem">
                     <TreeViewItem ItemsSource="{x:Bind Children}">
-                        <TextBlock Text="{x:Bind Message}" Foreground="{Binding IsImportant, Converter={StaticResource BoolToColorConverter}}" ToolTipService.ToolTip="{x:Bind Description}"/>
+                        <!--<TextBlock Text="{x:Bind Message}" Foreground="{Binding IsImportant, Converter={StaticResource BoolToColorConverter}}" ToolTipService.ToolTip="{x:Bind Description}"/>-->
+                        <Button Content="{x:Bind Message}" Width="170" Foreground="{Binding IsImportant, Converter={StaticResource BoolToColorConverter}}" ToolTipService.ToolTip="{x:Bind Description}" Click="{x:Bind OnButtonClicked}"></Button>
                     </TreeViewItem>
                 </DataTemplate>
             </TreeView.ItemTemplate>

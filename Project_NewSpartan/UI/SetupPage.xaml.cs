@@ -308,7 +308,7 @@ namespace Project_NewSpartan.UI
                 IniData data = new IniData();
                 data["Favorite"]["Name"] = "How to use Google";
                 data["Favorite"]["URL"] = "https://searchengineland.com/guide/how-to-use-google-to-search";
-                data["Favorite"]["Icon"] = "https://www.google.com/favicon.ico";
+                data["Favorite"]["Icon"] = "https://searchengineland.com/favicon.ico";
                 data["Favorite"]["Description"] = "See how can you use google (yeah...)";
                 await FileIO.WriteTextAsync(howToUseGoogleIni, data.ToString());
                 childLog.Children.Add(new LogItem("Writed to APP/Favorites/Help/HowToUseGoogle.ini"));

@@ -139,9 +139,19 @@
     <Compile Include="UI\FavoriteControl.xaml.cs">
       <DependentUpon>FavoriteControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ImageUriConverter.cs" />
     <Compile Include="UI\LogItem.cs" />
+    <Compile Include="UI\MessageBoxes.cs" />
+    <Compile Include="UI\NavigationParametersArgs.cs" />
     <Compile Include="UI\NavigationRailFrame.xaml.cs">
       <DependentUpon>NavigationRailFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewFavoriteControl.xaml.cs">
+      <DependentUpon>NewFavoriteControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewSpartanHTML\NSHtmlRenderer.cs" />
+    <Compile Include="UI\NewSpartanHTML\NSWebView.xaml.cs">
+      <DependentUpon>NSWebView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
@@ -192,6 +202,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\NewFavoriteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewSpartanHTML\NSWebView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,11 +228,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlParserDotNet">
+      <Version>1.0.0</Version>
+    </PackageReference>
     <PackageReference Include="ini-parser">
       <Version>2.5.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.6</Version>

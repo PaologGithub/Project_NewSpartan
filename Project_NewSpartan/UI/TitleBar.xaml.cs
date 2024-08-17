@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,6 +27,7 @@ namespace Project_NewSpartan.UI
     /// </summary>
     public sealed partial class TitleBar : Page
     {
+        double TitleBarButtonsWidth = 0;
         public TitleBar()
         {
             this.InitializeComponent();
@@ -35,10 +37,14 @@ namespace Project_NewSpartan.UI
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            Window.Current.SetTitleBar(DragRegion);
+            AddTabButtonUpper_Click(null, null);
+
         }
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            AppTitleBar.Height = sender.Height;
+            // AppTitleBar.Height = sender.Height + 8
+            TitleBarButtonsWidth = sender.SystemOverlayRightInset;
         }
 
         private void Update(object sender, object e)
@@ -60,6 +66,48 @@ namespace Project_NewSpartan.UI
                 titlebar.ButtonInactiveBackgroundColor = Colors.LightGray;
                 titlebar.ButtonInactiveForegroundColor = Colors.Gray;
             }
+
+            foreach(TabViewItem tab in Tabs.Items)
+            {
+                Grid tabContent = (tab.Content as Grid);
+                if (tabContent.Children.Count >= 2)
+                {
+                    string title = ((tabContent.Children[0] as Frame).Content as WebView)?.getCurrentTitle();
+                    tab.Header = title;
+                }
+            }
+        }
+
+        private void AddTabButtonUpper_Click(object sender, RoutedEventArgs e)
+        {
+            TabViewItem tabViewItem = new TabViewItem();
+            tabViewItem.Header = "New Tab";
+
+            Grid grid = new Grid();
+            tabViewItem.Content = grid;
+
+            RowDefinition rowDefinition1 = new RowDefinition();
+            rowDefinition1.Height = new GridLength(0, GridUnitType.Auto);
+            grid.RowDefinitions.Add(rowDefinition1);
+
+            RowDefinition rowDefinition2 = new RowDefinition();
+            rowDefinition2.Height = new GridLength(1, GridUnitType.Star);
+            grid.RowDefinitions.Add(rowDefinition2);
+
+            Frame webViewFrame = new Frame();
+            Grid.SetRow(webViewFrame, 1);
+            grid.Children.Add(webViewFrame);
+            webViewFrame.Navigate(typeof(UI.WebView));
+            
+            Frame navigationRailFrame = new Frame();
+            Grid.SetRow(navigationRailFrame, 0);
+            grid.Children.Add(navigationRailFrame);
+
+            NavigationParametersArgs args = new NavigationParametersArgs() { webView = (webViewFrame.Content as WebView), tabViewItem=tabViewItem };
+            navigationRailFrame.Navigate(typeof(UI.NavigationRailFrame), args);
+
+            Tabs.Items.Add(tabViewItem);
         }
     }
+
 }

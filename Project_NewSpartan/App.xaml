@@ -5,6 +5,5 @@
     xmlns:local="using:Project_NewSpartan">
     <Application.Resources>
         <!-- Add this ResourceDictionary -->
-        
     </Application.Resources>
 </Application>
